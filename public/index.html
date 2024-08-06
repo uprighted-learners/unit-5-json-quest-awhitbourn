@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+</head>
+<body>
+    <form id="userForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="quest">Quest:</label>
+        <input type="text" id="quest" name="quest" required>
+        <br>
+        <label for="favorite_color">Favorite Color:</label>
+        <input type="text" id="favorite_color" name="favorite_color" required>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="message"></div>
+
+    <script>
+        document.getElementById('userForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const quest = document.getElementById('quest').value;
+            const favoriteColor = document.getElementById('favorite_color').value;
+
+            const response = await fetch('/answers');
+            const correctAnswers = await response.json();
+
+            const messageDiv = document.getElementById('message');
+
+            if (name === correctAnswers.name && quest === correctAnswers.quest && favoriteColor === correctAnswers.favorite_color) {
+                messageDiv.textContent = 'You can continue on your way.';
+            } else {
+                messageDiv.textContent = 'You are denied passage.';
+            }
+        });
+    </script>
+</body>
+</html>

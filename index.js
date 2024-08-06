@@ -1,2 +1,17 @@
-//Copy and paste your code from creating-json to start this project
-// Don't forget to copy your "api" directory and contents as well
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = 3000;
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve the answers.json file
+app.get('/answers', (req, res) => {
+  res.sendFile(path.join(__dirname, 'api', 'answers.json'));
+});
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
+
